@@ -1,5 +1,6 @@
 import br.com.funcionarios.Atendente;
-
+import br.com.procedimentosMedicosRepository.Consulta;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -8,6 +9,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean opcaoIncorreta = false;
         Atendente atendente = new Atendente();
+        ArrayList<Consulta> listaConsultas = new ArrayList<Consulta>();
+
 
         System.out.println("Bem vindo a Clínica Médica!");
         System.out.println("Digite seu CPF: ");

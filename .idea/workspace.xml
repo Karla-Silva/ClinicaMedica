@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b1053b4-28ce-4524-9612-bb21c6587d1a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/br/com/Paciente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/br/com/procedimentosMedicosRepository/Cirurgia.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/br/com/procedimentosMedicosRepository/Consulta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/com/procedimentosMedicosRepository/Consulta.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/br/com/procedimentosMedicosRepository/Exame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/com/procedimentosMedicosRepository/Exame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/br/com/procedimentosMedicosRepository/Procedimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/br/com/procedimentosMedicosRepository/Procedimento.java" afterDir="false" />
@@ -69,7 +69,7 @@
       <workItem from="1669114398409" duration="11353000" />
       <workItem from="1669154172012" duration="2503000" />
       <workItem from="1670623231715" duration="1236000" />
-      <workItem from="1670935257818" duration="5587000" />
+      <workItem from="1670935257818" duration="7017000" />
     </task>
     <servers />
   </component>
