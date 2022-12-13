@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        boolean procedimentoIncorreto = false;
+        boolean opcaoIncorreta = false;
         Atendente atendente = new Atendente();
 
         System.out.println("Bem vindo a Clínica Médica!");
@@ -23,27 +23,28 @@ public class Main {
                     "4 - Realizar exame\n" +
                     "5 - Buscar resultado de exame"
             );
-            String procedimento = scanner.next();
-            switch (procedimento){
+            String opcao = scanner.next();
+            switch (opcao){
                 case "1":
-
+                    //marcar consulta
                     break;
                 case "2":
-
+                    //adiar consulta
                     break;
                 case "3":
-
+                    //cancelar consulta
                     break;
                 case "4":
-
+                    //realizar exame
                     break;
                 case "5":
-
+                    //buscar resultado do exame
                     break;
                 default:
-                    procedimentoIncorreto = true;
+                    opcaoIncorreta = true;
+                    System.out.println("Opção incorreta. Tente novamente.");
                     break;
             }
-        }while(procedimentoIncorreto);
+        }while(opcaoIncorreta);
     }
 }

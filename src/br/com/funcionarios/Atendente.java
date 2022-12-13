@@ -1,5 +1,4 @@
 package br.com.funcionarios;
-
 import br.com.procedimentosMedicosRepository.Procedimento;
 
 public class Atendente {
@@ -14,6 +13,4 @@ public class Atendente {
                                 procedimento.toString()
         );
     }
-
-
 }

@@ -7,5 +7,4 @@ public class Consulta extends Procedimento{
     public Consulta(String nomeDoProcedimento, LocalDate data, LocalTime horario) {
         super(nomeDoProcedimento, data, horario);
     }
-
 }
