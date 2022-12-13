@@ -1,18 +1,24 @@
 package br.com.procedimentosMedicosRepository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public abstract class Procedimento {
     private String nomeDoProcedimento;
-    private String nomeDoMedico;
+    private LocalDate data;
+    private LocalTime horario;
 
-    public Procedimento(String nomeDoProcedimento, String nomeDoMedico) {
+    public Procedimento(String nomeDoProcedimento, LocalDate data, LocalTime horario) {
         this.nomeDoProcedimento = nomeDoProcedimento;
-        this.nomeDoMedico = nomeDoMedico;
+
+        this.data = data;
+        this.horario = horario;
     }
 
 
     @Override
     public String toString() {
-        return "Procedimento: " + nomeDoProcedimento + '\n' +
-                "Médico: " + nomeDoMedico;
+        return "Procedimento: " + nomeDoProcedimento + '\n';
+
     }
 }
