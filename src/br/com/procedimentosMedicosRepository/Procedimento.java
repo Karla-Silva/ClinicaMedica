@@ -10,11 +10,9 @@ public abstract class Procedimento {
 
     public Procedimento(String nomeDoProcedimento, LocalDate data, LocalTime horario) {
         this.nomeDoProcedimento = nomeDoProcedimento;
-
         this.data = data;
         this.horario = horario;
     }
-
 
     @Override
     public String toString() {
