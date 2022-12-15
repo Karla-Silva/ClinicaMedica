@@ -6,19 +6,31 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public abstract class Procedimento {
+
+    private int id;
     private LocalDate data;
     private LocalTime horario;
     private Paciente paciente;
 
-    public Procedimento(LocalDate data, LocalTime horario, Paciente paciente) {
+    public Procedimento(int id, LocalDate data, LocalTime horario, Paciente paciente) {
+        this.id = id;
         this.data = data;
         this.horario = horario;
         this.paciente = paciente;
     }
 
-    public Procedimento(LocalDate data, LocalTime horario) {
+    public Procedimento(int id, LocalDate data, LocalTime horario) {
+        this.id = id;
         this.data = data;
         this.horario = horario;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public LocalDate getData() {
@@ -48,7 +60,8 @@ public abstract class Procedimento {
     @Override
     public String toString() {
         return "Procedimento{" +
-                "data=" + data +
+                "id=" + id +
+                ", data=" + data +
                 ", horario=" + horario +
                 ", paciente=" + paciente +
                 '}';

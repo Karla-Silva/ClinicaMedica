@@ -1,19 +1,26 @@
 import br.com.Paciente;
 import br.com.funcionarios.Atendente;
 import br.com.procedimentosMedicosRepository.Consulta;
+import br.com.procedimentosMedicosRepository.Exame;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+    //criar listas como variáveis globais para evitar serem resetadas quando o cliente sair
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
         Atendente atendente = new Atendente();
         ArrayList<Paciente> listaPacientes = new ArrayList<Paciente>();
         ArrayList<Consulta> listaConsultas = new ArrayList<Consulta>();
+        ArrayList<Exame> listaExames = new ArrayList<Exame>();
         consultasDaSemana(listaConsultas);
 
         Paciente paciente1 = new Paciente.Builder()
@@ -42,10 +49,10 @@ public class Main {
                     atendente.marcarConsulta(paciente, listaConsultas);
                     break;
                 case "2":
-                    //adiar consulta
+                    atendente.adiarConsulta(paciente, listaConsultas);
                     break;
                 case "3":
-                    //cancelar consulta
+                    atendente.cancelarConsulta(paciente, listaConsultas);
                     break;
                 case "4":
                     //realizar exame
@@ -67,7 +74,8 @@ public class Main {
             LocalDate data = LocalDate.now().plusDays(i);
             for(int j=8; j<=16; j++){
                 LocalTime horario = LocalTime.of(j, 0);
-                Consulta consulta = new Consulta(data, horario);
+                int id = Integer.parseInt("" + data.getYear() + data.getMonthValue() + data.getDayOfMonth() + horario.getHour()); //Identificação da consulta no format YYYYMMDDHH
+                Consulta consulta = new Consulta(id, data, horario);
                 listaConsultas.add(consulta);
             }
         }
