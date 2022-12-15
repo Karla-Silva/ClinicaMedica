@@ -54,7 +54,7 @@ public class Atendente {
         System.out.println("Escolha o horário da sua consulta. Horarios disponiveis: ");
         checarHorariosDisponiveis(listaConsultas, data);
         int opcaoHorario = scanner.nextInt();
-        LocalTime horario = LocalTime.of(opcaoHorario+7, 0, 0);
+        LocalTime horario = LocalTime.of(opcaoHorario, 0, 0);
 
         for(Consulta consulta : listaConsultas){
             if(consulta.getData().compareTo(data) == 0 && consulta.getHorario().compareTo(horario) == 0){
@@ -62,9 +62,18 @@ public class Atendente {
             }
         }
 
+        List<Consulta> consultaMarcada = listaConsultas.stream()
+                .filter(x -> x.getPaciente() == paciente)
+                .filter(x -> x.getData().compareTo(data) == 0)
+                .filter(x -> x.getHorario().compareTo(horario) == 0)
+                .collect(Collectors.toList());
+
+        System.out.println(consultaMarcada);
+
         System.out.println(
                         "------------Comprovante de agendamento------------\n" +
                         "Paciente: " + paciente.getNome() + "\n" +
+                        "Id: " + consultaMarcada.get(0).getId() + "\n" +
                         "Data: " + data + "\n" +
                         "Horario: " + horario + "\n"
         );
@@ -100,10 +109,8 @@ public class Atendente {
                                             })
                                             .filter(x -> x.getPaciente() == null)
                                             .collect(Collectors.toList());
-        int i = 0;
         for(Consulta consulta : horariosLivres){
-            i++;
-            System.out.println(i + " - " + consulta.getHorario());
+            System.out.println(consulta.getHorario());
         };
     }
 
