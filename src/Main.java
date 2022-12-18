@@ -3,8 +3,6 @@ import br.com.funcionarios.Atendente;
 import br.com.procedimentosMedicosRepository.Consulta;
 import br.com.procedimentosMedicosRepository.Exame;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -30,7 +28,8 @@ public class Main {
                 .build();
         listaPacientes.add(paciente1);
 
-        while(true){
+        boolean continuar = true;
+        while(continuar){
             System.out.println("Bem vindo a Clínica Médica!");
             Paciente paciente = atendente.conferirCpf(listaPacientes);
 
@@ -41,7 +40,8 @@ public class Main {
                       "2 - Adiar consulta\n" +
                       "3 - Cancelar consulta\n" +
                       "4 - Realizar exame\n" +
-                      "5 - Buscar resultado de exame"
+                      "5 - Buscar resultado de exame\n" +
+                      "6 - Sair"
                 );
                 String opcao = scanner.nextLine();
                 switch (opcao){
@@ -55,17 +55,20 @@ public class Main {
                     atendente.cancelarConsulta(paciente, listaConsultas);
                     break;
                 case "4":
-                    //realizar exame
+                    atendente.realizarExame(paciente, listaExames);
                     break;
                 case "5":
-                    //buscar resultado do exame
+                    atendente.buscarResultadoExame(paciente, listaExames);
                     break;
+                case "6":
+                   continuar = false;
+                   break;
                 default:
                     opcaoIncorreta = true;
                     System.out.println("Opção incorreta. Tente novamente.");
                     break;
-            }
-        }while(opcaoIncorreta);
+                }
+            }while(opcaoIncorreta);
         }
     }
 
@@ -74,7 +77,7 @@ public class Main {
             LocalDate data = LocalDate.now().plusDays(i);
             for(int j=8; j<=16; j++){
                 LocalTime horario = LocalTime.of(j, 0);
-                int id = Integer.parseInt("" + data.getYear() + data.getMonthValue() + data.getDayOfMonth() + horario.getHour()); //Identificação da consulta no format YYYYMMDDHH
+                String id = String.valueOf(data.getYear() + data.getMonthValue() + data.getDayOfMonth() + horario.getHour()); //Identificação da consulta no format YYYYMMDDHH
                 Consulta consulta = new Consulta(id, data, horario);
                 listaConsultas.add(consulta);
             }

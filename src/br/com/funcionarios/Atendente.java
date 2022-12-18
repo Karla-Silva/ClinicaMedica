@@ -1,13 +1,17 @@
 package br.com.funcionarios;
 import br.com.Paciente;
 import br.com.procedimentosMedicosRepository.Consulta;
+import br.com.procedimentosMedicosRepository.Exame;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 public class Atendente {
 
@@ -57,18 +61,16 @@ public class Atendente {
         LocalTime horario = LocalTime.of(opcaoHorario, 0, 0);
 
         for(Consulta consulta : listaConsultas){
-            if(consulta.getData().compareTo(data) == 0 && consulta.getHorario().compareTo(horario) == 0){
+            if(consulta.getData().isEqual(data) && consulta.getHorario().equals(horario)){
                 consulta.setPaciente(paciente);
             }
         }
 
         List<Consulta> consultaMarcada = listaConsultas.stream()
                 .filter(x -> x.getPaciente() == paciente)
-                .filter(x -> x.getData().compareTo(data) == 0)
-                .filter(x -> x.getHorario().compareTo(horario) == 0)
+                .filter(x -> x.getData().isEqual(data))
+                .filter(x -> x.getHorario().equals(horario))
                 .collect(Collectors.toList());
-
-        System.out.println(consultaMarcada);
 
         System.out.println(
                         "------------Comprovante de agendamento------------\n" +
@@ -83,14 +85,8 @@ public class Atendente {
         for(int i=0; i<=6; i++) {
             LocalDate data = LocalDate.now().plusDays(i);
             long vagas = listaConsultas.stream()
-                    .filter(x -> {
-                        LocalDate data1 = x.getData();
-                        if (data1.compareTo(data) == 0){
-                            return true;
-                        }else{
-                            return false;
-                        }
-                    }).count();
+                    .filter(x -> x.getData().isEqual(data))
+                    .count();
             if(vagas > 0){
                 System.out.println(i+1 + " - " + data + " - " + data.getDayOfWeek());
             }
@@ -99,33 +95,19 @@ public class Atendente {
 
     public void checarHorariosDisponiveis(ArrayList<Consulta> listaConsultas, LocalDate data){
         List<Consulta> horariosLivres = listaConsultas.stream()
-                                            .filter(x -> {
-                                                 LocalDate data1 = x.getData();
-                                                 if (data1.compareTo(data) == 0){
-                                                    return true;
-                                                 }else{
-                                                    return false;
-                                                 }
-                                            })
+                                            .filter(x -> x.getData().isEqual(data))
                                             .filter(x -> x.getPaciente() == null)
                                             .collect(Collectors.toList());
         for(Consulta consulta : horariosLivres){
             System.out.println(consulta.getHorario());
-        };
+        }
     }
 
 
     public void adiarConsulta(Paciente paciente,ArrayList<Consulta> listaConsultas) {
 
         List<Consulta> consultasMarcadas = listaConsultas.stream()
-                .filter(x -> {
-                    Paciente paciente1 = x.getPaciente();
-                    if (paciente1 == paciente) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                })
+                .filter(x -> x.getPaciente() == paciente)
                 .collect(Collectors.toList());
 
         if (!consultasMarcadas.isEmpty()) {
@@ -143,7 +125,7 @@ public class Atendente {
             }
 
             System.out.println("Informe o id da consulta que deseja adiar: ");
-            int identificador = sc.nextInt();
+            String identificador = sc.nextLine();
 
             System.out.println("Escolha a nova data da sua consulta. Dias disponiveis: (YYYY-MM-DD)");
             checarDiasDisponiveis(listaConsultas);
@@ -155,13 +137,12 @@ public class Atendente {
             int novoHorario = sc.nextInt();
             LocalTime horario = LocalTime.of(novoHorario + 7, 0, 0);
 
-            int novoIdentificador = Integer.parseInt("" + data.getYear() + data.getMonthValue() + data.getDayOfMonth() + horario.getHour());
+            String novoIdentificador = String.valueOf(Integer.parseInt("" + data.getYear() + data.getMonthValue() + data.getDayOfMonth() + horario.getHour()));
             for (Consulta consultas : listaConsultas) {
                 if (consultas.getId().compareTo(identificador) == 0) {
                     consultas.setPaciente(null);
                 } else if (consultas.getId().compareTo(novoIdentificador) == 0) {
                     consultas.setPaciente(paciente);
-                    System.out.println(consultas); // teste
                     System.out.println(
                             "------------Comprovante de reagendamento ------------\n" +
                                     "Paciente: " + consultas.getPaciente().getNome() + "\n" +
@@ -170,25 +151,15 @@ public class Atendente {
                                     "Novo horario: " + consultas.getHorario() + "\n");
                 }
             }
-
-            System.out.println(listaConsultas);
         } else {
             System.out.println("----- Você ainda não tem consultas marcadas! -----");
         }
     }
 
-
     public void cancelarConsulta(Paciente paciente,ArrayList<Consulta> listaConsultas){
 
         List<Consulta> consultasMarcadas = listaConsultas.stream()
-                .filter(x -> {
-                    Paciente paciente1 = x.getPaciente();
-                    if (paciente1 == paciente){
-                        return true;
-                    }else {
-                        return false;
-                    }
-                })
+                .filter(x -> x.getPaciente() == paciente)
                 .collect(Collectors.toList());
 
         if (!consultasMarcadas.isEmpty() ){
@@ -207,15 +178,82 @@ public class Atendente {
             }
 
             System.out.println("Informe o id da consulta que deseja cancelar: ");
-            int identificador = sc.nextInt();
+            String identificador = sc.nextLine();
 
             for(Consulta consultas : listaConsultas){
-                if (consultas.getId() == identificador){
+                if (identificador.equals(consultas.getId())){
                     consultas.setPaciente(null);
+                    System.out.println("Consulta cancelada com sucesso.");
                 }
             }
         } else {
             System.out.println("----- Você ainda não tem consultas marcadas! -----");
         }
     }
+
+    public void realizarExame(Paciente paciente, ArrayList<Exame> listaExames){
+        LocalDate dataDoExame = LocalDate.now();
+        LocalTime horaDoExame = LocalTime.now();
+
+        String id = String.valueOf(dataDoExame.getYear()
+                + dataDoExame.getMonthValue()
+                + dataDoExame.getDayOfMonth()
+                + horaDoExame.getHour());
+
+        String fileName = id + ".txt";
+
+        String resultado = "Paciente: " + paciente.getNome() + "\n" +
+                "Data: " + dataDoExame + "\n" +
+                "Hora: " + horaDoExame + "\n" +
+                "Resultado: " + resultadoDoenca() + "\n";
+
+        try{
+            Exame exame = new Exame(id, dataDoExame, horaDoExame, paciente);
+            listaExames.add(exame);
+            Path path = Paths.get(fileName);
+            Files.write(path, resultado.getBytes());
+            System.out.println("Exame realizado.");
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public String resultadoDoenca(){
+        Random gerador = new Random();
+
+        int resultado = gerador.nextInt(5);
+
+        switch (resultado) {
+            case 0:
+                return "Gripe";
+            case 1:
+                return "Catapora";
+            case 2:
+                return "Diabetes";
+            case 3:
+                return "Hipertensão";
+            default:
+                return "Saudável";
+        }
+    }
+
+    public void buscarResultadoExame(Paciente paciente, ArrayList<Exame> listaExames){
+        System.out.println("Seus exames: ");
+        for(Exame exame : listaExames){
+            if(exame.getPaciente().equals(paciente)){
+                System.out.println("-------------Resultado do exame-------------\n");
+                try{FileReader arq = new FileReader(exame.getId() + ".txt");
+                    BufferedReader lerArq = new BufferedReader(arq);
+                    String linha = lerArq.readLine();
+                    while (linha != null) {
+                        System.out.println(linha);
+                        linha = lerArq.readLine();
+                    }
+                }catch (IOException e ){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

@@ -7,29 +7,29 @@ import java.time.LocalTime;
 
 public abstract class Procedimento {
 
-    private int id;
+    private String id;
     private LocalDate data;
     private LocalTime horario;
     private Paciente paciente;
 
-    public Procedimento(int id, LocalDate data, LocalTime horario, Paciente paciente) {
+    public Procedimento(String id, LocalDate data, LocalTime horario, Paciente paciente) {
         this.id = id;
         this.data = data;
         this.horario = horario;
         this.paciente = paciente;
     }
 
-    public Procedimento(int id, LocalDate data, LocalTime horario) {
+    public Procedimento(String id, LocalDate data, LocalTime horario) {
         this.id = id;
         this.data = data;
         this.horario = horario;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
