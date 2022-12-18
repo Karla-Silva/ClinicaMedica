@@ -18,7 +18,7 @@ public class Atendente {
     public Atendente() {}
 
     public Paciente conferirCpf(ArrayList<Paciente> listaPacientes){
-        System.out.println("Digite seu CPF: ");
+        var ThreadConferirCpf = new ThreadConferirCpf();
         Scanner scanner = new Scanner(System.in);
         String cpf = scanner.next();
         boolean cpfCadastrado = listaPacientes.stream().anyMatch(x -> Objects.equals(x.getCpf(), cpf));
@@ -242,7 +242,8 @@ public class Atendente {
         for(Exame exame : listaExames){
             if(exame.getPaciente().equals(paciente)){
                 System.out.println("-------------Resultado do exame-------------\n");
-                try{FileReader arq = new FileReader(exame.getId() + ".txt");
+                try{
+                    FileReader arq = new FileReader(exame.getId() + ".txt");
                     BufferedReader lerArq = new BufferedReader(arq);
                     String linha = lerArq.readLine();
                     while (linha != null) {

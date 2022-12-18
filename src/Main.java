@@ -1,5 +1,6 @@
 import br.com.Paciente;
 import br.com.funcionarios.Atendente;
+import br.com.funcionarios.ThreadMenu;
 import br.com.procedimentosMedicosRepository.Consulta;
 import br.com.procedimentosMedicosRepository.Exame;
 
@@ -10,8 +11,6 @@ import java.util.Scanner;
 
 public class Main {
 
-    //criar listas como variáveis globais para evitar serem resetadas quando o cliente sair
-
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -20,29 +19,14 @@ public class Main {
         ArrayList<Consulta> listaConsultas = new ArrayList<Consulta>();
         ArrayList<Exame> listaExames = new ArrayList<Exame>();
         consultasDaSemana(listaConsultas);
-
-        Paciente paciente1 = new Paciente.Builder()
-                .cpf("11122233344")
-                .nome("Jose")
-                .dataNascimento(LocalDate.now())
-                .build();
-        listaPacientes.add(paciente1);
+        cadastrarPaciente1(listaPacientes);
 
         boolean continuar = true;
         while(continuar){
-            System.out.println("Bem vindo a Clínica Médica!");
             Paciente paciente = atendente.conferirCpf(listaPacientes);
-
             boolean opcaoIncorreta = false;
             do{
-                System.out.println("Selecione a opção que deseja:\n" +
-                      "1 - Marcar consulta\n" +
-                      "2 - Adiar consulta\n" +
-                      "3 - Cancelar consulta\n" +
-                      "4 - Realizar exame\n" +
-                      "5 - Buscar resultado de exame\n" +
-                      "6 - Sair"
-                );
+                var ThreadMenu = new ThreadMenu();
                 String opcao = scanner.nextLine();
                 switch (opcao){
                 case "1":
@@ -83,4 +67,14 @@ public class Main {
             }
         }
     }
+
+    public static void cadastrarPaciente1(ArrayList<Paciente> listaPacientes){
+        Paciente paciente1 = new Paciente.Builder()
+                .cpf("11122233344")
+                .nome("Jose")
+                .dataNascimento(LocalDate.now())
+                .build();
+        listaPacientes.add(paciente1);
+    }
+
 }

@@ -1,0 +1,4 @@
+Paciente: Jose
+Data: 2022-12-18
+Hora: 10:38:00.576054600
+Resultado: Catapora
