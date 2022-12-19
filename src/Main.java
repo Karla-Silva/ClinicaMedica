@@ -61,7 +61,7 @@ public class Main {
             LocalDate data = LocalDate.now().plusDays(i);
             for(int j=8; j<=16; j++){
                 LocalTime horario = LocalTime.of(j, 0);
-                String id = String.valueOf(data.getYear() + data.getMonthValue() + data.getDayOfMonth() + horario.getHour()); //Identificação da consulta no format YYYYMMDDHH
+                String id = String.valueOf(""+ data.getYear() + data.getMonthValue() + data.getDayOfMonth() + horario.getHour()); //Identificação da consulta no formato YYYYMMDDHH
                 Consulta consulta = new Consulta(id, data, horario);
                 listaConsultas.add(consulta);
             }

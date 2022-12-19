@@ -1,5 +1,6 @@
 package br.com.funcionarios;
 import br.com.Paciente;
+import br.com.aparelhos.Impressora;
 import br.com.procedimentosMedicosRepository.Consulta;
 import br.com.procedimentosMedicosRepository.Exame;
 
@@ -72,13 +73,8 @@ public class Atendente {
                 .filter(x -> x.getHorario().equals(horario))
                 .collect(Collectors.toList());
 
-        System.out.println(
-                        "------------Comprovante de agendamento------------\n" +
-                        "Paciente: " + paciente.getNome() + "\n" +
-                        "Id: " + consultaMarcada.get(0).getId() + "\n" +
-                        "Data: " + data + "\n" +
-                        "Horario: " + horario + "\n"
-        );
+        Impressora impressora = new Impressora();
+        impressora.comprovanteAgendamento(consultaMarcada);
     }
 
     public void checarDiasDisponiveis(ArrayList<Consulta> listaConsultas){
@@ -113,16 +109,8 @@ public class Atendente {
         if (!consultasMarcadas.isEmpty()) {
             Scanner sc = new Scanner(System.in);
             int i = 1;
-            System.out.println("------------Lista de consultas marcadas------------");
-            System.out.println("Paciente: " + paciente.getNome());
-            for (Consulta consulta : consultasMarcadas) {
-                System.out.printf(
-                        "------Consulta nº %d------\n" +
-                                "id: " + consulta.getId() + "\n" +
-                                "Data: " + consulta.getData() + "\n" +
-                                "Horario: " + consulta.getHorario() + "\n", i);
-                i++;
-            }
+            Impressora impressora = new Impressora();
+            impressora.consultasMarcadas(consultasMarcadas);
 
             System.out.println("Informe o id da consulta que deseja adiar: ");
             String identificador = sc.nextLine();
@@ -143,12 +131,7 @@ public class Atendente {
                     consultas.setPaciente(null);
                 } else if (consultas.getId().compareTo(novoIdentificador) == 0) {
                     consultas.setPaciente(paciente);
-                    System.out.println(
-                            "------------Comprovante de reagendamento ------------\n" +
-                                    "Paciente: " + consultas.getPaciente().getNome() + "\n" +
-                                    "Novo id: " + consultas.getId() + "\n" +
-                                    "Nova data: " + consultas.getData() + "\n" +
-                                    "Novo horario: " + consultas.getHorario() + "\n");
+                    impressora.comprovanteReagendamento(listaConsultas, novoIdentificador);
                 }
             }
         } else {
@@ -164,18 +147,9 @@ public class Atendente {
 
         if (!consultasMarcadas.isEmpty() ){
             Scanner sc = new Scanner(System.in);
-            int i = 1;
-            System.out.println("------------Lista de consultas marcadas------------");
-            System.out.println("Paciente: " + paciente.getNome());
 
-            for(Consulta consulta : consultasMarcadas){
-                System.out.printf(
-                        "------Consulta nº %d------\n" +
-                                "id: " + consulta.getId()+ "\n" +
-                                "Data: " + consulta.getData() + "\n" +
-                                "Horario: " + consulta.getHorario() + "\n", i);
-                i++;
-            }
+            Impressora impressora = new Impressora();
+            impressora.consultasMarcadas(consultasMarcadas);
 
             System.out.println("Informe o id da consulta que deseja cancelar: ");
             String identificador = sc.nextLine();
